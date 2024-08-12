@@ -24,8 +24,6 @@ class DataCleaning:
             df['Weapon_Used_Code'] = df['Weapon_Used_Code'].fillna(0.0)
             df['Weapon_Description'] = df['Weapon_Description'].fillna('Not Reported')
             df['Premise_Description'] = df['Premise_Description'].fillna('Not Reported')
-
-            
             logging.info(f'Data Cleaning completed. Shape of data: {df.shape}')
             return df
 
@@ -81,6 +79,14 @@ class DataCleaning:
             # Log-transform the Time_Difference
             df['Time_Difference_Log'] = np.log(df['Time_Difference'] + 1)
 
+            # Map Crime_Category to 0 to 5 classes
+            crime_category=df['Crime_Category'].value_counts().index.tolist()
+            labels_map={}
+            for i in range(len(crime_category)):
+                labels_map[crime_category[i]]=i
+            df['Crime_Category'] = df['Crime_Category'].map(labels_map)
+     
+
             # Drop features that were removed during cleaning
             features_to_remove = [
                 'Reported_Day', 'Occurred_Year', 'Occurred_Month', 
@@ -90,7 +96,7 @@ class DataCleaning:
                 'Cross_Street', 'Time_Occurred'
             ]
             
-            df = df.drop(columns=features_to_remove,axis=1)
+            df = df.drop(columns=features_to_remove, axis=1)
             
             # Drop duplicates
             df = df.drop_duplicates()

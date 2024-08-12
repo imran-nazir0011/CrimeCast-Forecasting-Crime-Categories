@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 import pandas as pd
 import numpy as np
+from scipy.sparse import csr_matrix,hstack
 
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
@@ -13,8 +14,8 @@ from sklearn.preprocessing import OneHotEncoder,StandardScaler
 
 from src.exception import CustomException
 from src.logger import logging
+from src.utils import save_object
 
-# from src.utils import save_objects
 
 @dataclass
 class DataTransformationConfig:
@@ -43,7 +44,7 @@ class DataTransformation:
             cat_pipeline=Pipeline(
                 steps=[
                     ('imputer',SimpleImputer(strategy='most_frequent')),
-                    ('one_hot_encoder',OneHotEncoder()),
+                    ('one_hot_encoder',OneHotEncoder(handle_unknown='ignore')),
                     ('scaler',StandardScaler(with_mean=False))
                 ]
             )
@@ -78,7 +79,37 @@ class DataTransformation:
 
             target='Crime_Category'
 
+            input_feature_train_df=train_df.drop(columns=[target],axis=1)
+            target_feature_train_df=train_df[target]
+
+            input_feature_test_df=test_df.drop(columns=[target],axis=1)
+            target_feature_test_df=test_df[target]
+
+            logging.info(
+                'Applying preprocessing object on training dataframe and testing dataframe.'
+            )
             
+            input_feature_train_sparse=preprocessor_obj.fit_transform(input_feature_train_df,)
+            input_feature_test_sparse=preprocessor_obj.transform(input_feature_test_df)
+            
+            target_feature_train_df_sparse=csr_matrix(target_feature_train_df.values.reshape(-1,1))
+            target_feature_test_df_sparse=csr_matrix(target_feature_test_df.values.reshape(-1,1))
+
+            train_sparse=hstack([input_feature_train_sparse,target_feature_train_df_sparse])
+            test_sparse=hstack([input_feature_test_sparse,target_feature_test_df_sparse])
+
+            logging.info(f"Saved preprocessing object.")
+
+            save_object(
+                file_path=self.data_transformation_config.preprocessor_obj_file_path,
+                obj=preprocessor_obj
+                          )
+            
+            return (
+                train_sparse,
+                test_sparse,
+                self.data_transformation_config.preprocessor_obj_file_path,
+            )
         
         except Exception as e:
-            pass
+            raise CustomException(e,sys)

@@ -4,22 +4,27 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+
+
+from src.components.data_cleaning import DataCleaning  
+from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
+
 from src.exception import CustomException
 from src.logger import logging
-from src.components.data_cleaning import DataCleaning  # Update the import path as needed
 
 @dataclass
 class DataIngestionConfig:
     train_data_path: str = os.path.join('artifacts', 'train.csv')
     test_data_path: str = os.path.join('artifacts', 'test.csv')
     raw_data_path: str = os.path.join('artifacts', 'raw.csv')
-    cleaned_data_path: str = os.path.join('artifacts', 'cleaned_data.csv')  # New path for cleaned data
+    cleaned_data_path: str = os.path.join('artifacts', 'cleaned_data.csv')  
 
 class DataIngestion:
     def __init__(self):
         self.ingestion_config = DataIngestionConfig()
-        self.data_cleaning = DataCleaning()  # Instantiate the DataCleaning class
-    
+        self.data_cleaning = DataCleaning()  
+
     def initiate_data_ingestion(self):
         logging.info('Data Ingestion has initiated')
         try:
@@ -55,7 +60,7 @@ class DataIngestion:
             return (
                 self.ingestion_config.train_data_path,
                 self.ingestion_config.test_data_path,
-                self.ingestion_config.cleaned_data_path  # Return the path to the cleaned data
+                self.ingestion_config.cleaned_data_path
             )
 
         except Exception as e:
@@ -63,7 +68,15 @@ class DataIngestion:
 
 if __name__ == '__main__':
     data_ingestion = DataIngestion()
-    train_data, test_data, cleaned_data = data_ingestion.initiate_data_ingestion()
-    print(f"Training data saved to: {train_data}")
-    print(f"Testing data saved to: {test_data}")
-    print(f"Cleaned data saved to: {cleaned_data}")
+    train_data, test_data ,_= data_ingestion.initiate_data_ingestion()
+
+    
+    data_transformation=DataTransformation()
+    train , test , _ = data_transformation.initiate_data_transformation(train_data,test_data)
+
+    model_training=ModelTrainer()
+    score=model_training.initiate_model_trainer(train=train,test=test)
+    logging.info(f'Accuracy score of best model is {score}')
+
+
+
