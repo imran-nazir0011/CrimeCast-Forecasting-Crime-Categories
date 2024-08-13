@@ -92,11 +92,6 @@ class DataTransformation:
             input_feature_train_sparse=preprocessor_obj.fit_transform(input_feature_train_df,)
             input_feature_test_sparse=preprocessor_obj.transform(input_feature_test_df)
             
-            target_feature_train_df_sparse=csr_matrix(target_feature_train_df.values.reshape(-1,1))
-            target_feature_test_df_sparse=csr_matrix(target_feature_test_df.values.reshape(-1,1))
-
-            train_sparse=hstack([input_feature_train_sparse,target_feature_train_df_sparse])
-            test_sparse=hstack([input_feature_test_sparse,target_feature_test_df_sparse])
 
             logging.info(f"Saved preprocessing object.")
 
@@ -106,8 +101,10 @@ class DataTransformation:
                           )
             
             return (
-                train_sparse,
-                test_sparse,
+                input_feature_train_sparse,
+                input_feature_test_sparse,
+                target_feature_train_df.values,
+                target_feature_test_df.values,
                 self.data_transformation_config.preprocessor_obj_file_path,
             )
         

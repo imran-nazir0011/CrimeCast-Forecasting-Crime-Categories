@@ -72,10 +72,10 @@ if __name__ == '__main__':
 
     
     data_transformation=DataTransformation()
-    train , test , _ = data_transformation.initiate_data_transformation(train_data,test_data)
+    train , test ,train_label,test_label,_ = data_transformation.initiate_data_transformation(train_data,test_data)
 
     model_training=ModelTrainer()
-    score=model_training.initiate_model_trainer(train=train,test=test)
+    score=model_training.initiate_model_trainer(train=train,test=test,train_label=train_label,test_label=test_label)
     logging.info(f'Accuracy score of best model is {score}')
 
 
