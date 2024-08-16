@@ -1,11 +1,9 @@
 import pandas as pd
 import numpy as np
-import json
 from flask import Flask, render_template, request
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.predict_pipeline import PredictPipeline, CustomData
 from src.components.data_ingestion import DataIngestionConfig
-from src.logger import logging
 
 # Load data and extract unique values for dropdowns
 df = pd.read_csv(DataIngestionConfig().raw_data_path)
