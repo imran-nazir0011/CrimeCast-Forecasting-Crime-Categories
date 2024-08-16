@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center">Crime Data Prediction</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="/predict" method="POST">
+                            <!-- Location -->
+                            <div class="mb-3">
+                                <label for="Location" class="form-label">Location</label>
+                                <select id="Location" name="Location" class="form-control" required>
+                                    <option value="">Select Location</option>
+                                    {% for location in unique_values['Location'] %}
+                                    <option value="{{ location }}">{{ location }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Cross Street -->
+                            <div class="mb-3">
+                                <label for="Cross_Street" class="form-label">Cross Street</label>
+                                <select id="Cross_Street" name="Cross_Street" class="form-control">
+                                    <option value="">Select Cross Street</option>
+                                    {% for street in unique_values['Cross_Street'] %}
+                                    <option value="{{ street }}">{{ street }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Latitude -->
+                            <div class="mb-3">
+                                <label for="Latitude" class="form-label">Latitude</label>
+                                <input type="number" step="any" id="Latitude" name="Latitude" class="form-control" 
+                                    min="33.7037" max="34.3373" required>
+                                <small class="form-text text-muted">Latitude range for Los Angeles: 33.7037 to 34.3373</small>
+                            </div>
+
+                            <!-- Longitude -->
+                            <div class="mb-3">
+                                <label for="Longitude" class="form-label">Longitude</label>
+                                <input type="number" step="any" id="Longitude" name="Longitude" class="form-control" 
+                                    min="-118.6682" max="-118.1553" required>
+                                <small class="form-text text-muted">Longitude range for Los Angeles: -118.6682 to -118.1553</small>
+                            </div>
+
+                            <!-- Date Reported -->
+                            <div class="mb-3">
+                                <label for="Date_Reported" class="form-label">Date Reported</label>
+                                <input type="date" id="Date_Reported" name="Date_Reported" class="form-control">
+                            </div>
+
+                            <!-- Date Occurred -->
+                            <div class="mb-3">
+                                <label for="Date_Occurred" class="form-label">Date Occurred</label>
+                                <input type="date" id="Date_Occurred" name="Date_Occurred" class="form-control">
+                            </div>
+
+                            <!-- Time Occurred -->
+                            <div class="mb-3">
+                                <label for="Time_Occurred" class="form-label">Time Occurred</label>
+                                <input type="time" id="Time_Occurred" name="Time_Occurred" class="form-control">
+                            </div>
+
+                            <!-- Area ID -->
+                            <div class="mb-3">
+                                <label for="Area_ID" class="form-label">Area ID</label>
+                                <input type="number" id="Area_ID" name="Area_ID" class="form-control" required>
+                            </div>
+
+                            <!-- Area Name -->
+                            <div class="mb-3">
+                                <label for="Area_Name" class="form-label">Area Name</label>
+                                <select id="Area_Name" name="Area_Name" class="form-control">
+                                    <option value="">Select Area Name</option>
+                                    {% for area in unique_values['Area_Name'] %}
+                                    <option value="{{ area }}">{{ area }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Reporting District No -->
+                            <div class="mb-3">
+                                <label for="Reporting_District_no" class="form-label">Reporting District No</label>
+                                <input type="number" id="Reporting_District_no" name="Reporting_District_no" class="form-control">
+                            </div>
+
+                            <!-- Part 1 or 2 -->
+                            <div class="mb-3">
+                                <label for="Part_1_2" class="form-label">Part 1 or 2</label>
+                                <select id="Part_1_2" name="Part_1_2" class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+
+                            <!-- Modus Operandi -->
+                            <div class="mb-3">
+                                <label for="Modus_Operandi" class="form-label">Modus Operandi</label>
+                                <select id="Modus_Operandi" name="Modus_Operandi" class="form-control">
+                                    <option value="">Select Modus Operandi</option>
+                                    {% for modus in unique_values['Modus_Operandi'] %}
+                                    <option value="{{ modus }}">{{ modus }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Victim Age -->
+                            <div class="mb-3">
+                                <label for="Victim_Age" class="form-label">Victim Age</label>
+                                <input type="number" id="Victim_Age" name="Victim_Age" class="form-control">
+                            </div>
+
+                            <!-- Victim Sex -->
+                            <div class="mb-3">
+                                <label for="Victim_Sex" class="form-label">Victim Sex</label>
+                                <select id="Victim_Sex" name="Victim_Sex" class="form-control">
+                                    <option value="">Select Victim Sex</option>
+                                    {% for sex in unique_values['Victim_Sex'] %}
+                                    <option value="{{ sex }}">{{ sex }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Victim Descent -->
+                            <div class="mb-3">
+                                <label for="Victim_Descent" class="form-label">Victim Descent</label>
+                                <select id="Victim_Descent" name="Victim_Descent" class="form-control">
+                                    <option value="">Select Victim Descent</option>
+                                    {% for descent in unique_values['Victim_Descent'] %}
+                                    <option value="{{ descent }}">{{ descent }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Premise Code -->
+                            <div class="mb-3">
+                                <label for="Premise_Code" class="form-label">Premise Code</label>
+                                <input type="number" id="Premise_Code" name="Premise_Code" class="form-control">
+                            </div>
+
+                            <!-- Premise Description -->
+                            <div class="mb-3">
+                                <label for="Premise_Description" class="form-label">Premise Description</label>
+                                <select id="Premise_Description" name="Premise_Description" class="form-control">
+                                    <option value="">Select Premise Description</option>
+                                    {% for description in unique_values['Premise_Description'] %}
+                                    <option value="{{ description }}">{{ description }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Weapon Used Code -->
+                            <div class="mb-3">
+                                <label for="Weapon_Used_Code" class="form-label">Weapon Used Code</label>
+                                <input type="number" id="Weapon_Used_Code" name="Weapon_Used_Code" class="form-control">
+                            </div>
+
+                            <!-- Weapon Description -->
+                            <div class="mb-3">
+                                <label for="Weapon_Description" class="form-label">Weapon Description</label>
+                                <select id="Weapon_Description" name="Weapon_Description" class="form-control">
+                                    <option value="">Select Weapon Description</option>
+                                    {% for description in unique_values['Weapon_Description'] %}
+                                    <option value="{{ description }}">{{ description }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="mb-3">
+                                <label for="Status" class="form-label">Status</label>
+                                <select id="Status" name="Status" class="form-control">
+                                    <option value="">Select Status</option>
+                                    {% for status in unique_values['Status'] %}
+                                    <option value="{{ status }}">{{ status }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Status Description -->
+                            <div class="mb-3">
+                                <label for="Status_Description" class="form-label">Status Description</label>
+                                <select id="Status_Description" name="Status_Description" class="form-control">
+                                    <option value="">Select Status Description</option>
+                                    {% for description in unique_values['Status_Description'] %}
+                                    <option value="{{ description }}">{{ description }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+
+                        {% if result %}
+                        <div class="mt-4">
+                            <h4 class="text-center">Prediction Result</h4>
+                            <p class="text-center">The predicted crime category is: <strong>{{ result }}</strong></p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

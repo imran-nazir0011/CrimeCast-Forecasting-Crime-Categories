@@ -58,7 +58,7 @@ class CustomData:
        self.Part_1_2=Part_1_2
        self.Modus_Operandi =Modus_Operandi
        self.Victim_Age=Victim_Age
-       self.Victim_Sex =Victim_Age
+       self.Victim_Sex =Victim_Sex
        self.Victim_Descent =Victim_Descent
        self.Premise_Code =Premise_Code
        self.Premise_Description =Premise_Description
