@@ -9,10 +9,30 @@ from src.logger import logging
 
 # Load data and extract unique values for dropdowns
 df = pd.read_csv(DataIngestionConfig().raw_data_path)
-string_columns = df.select_dtypes(include='object').columns.tolist()
+
+
+df['Premise_Description']=df['Premise_Description'].fillna('NOT APPLICABLE')
+df['Weapon_Description']=df['Weapon_Description'].fillna('NOT APPLICABLE')
+df['Weapon_Used_Code']=df['Weapon_Used_Code'].fillna(float(0.0))
+
+
+columns = df.select_dtypes(include='object').columns.tolist()
+columns.append('Reporting_District_no')
+columns.append('Part 1-2')
 unique_values = {}
-for col in string_columns:
-    unique_values[col] = df[col].dropna().unique()
+for col in columns:
+    unique_list = df[col].dropna().unique().tolist()
+    # Sort the list of unique values
+    unique_values[col] = sorted(unique_list)
+
+Area={}
+Premise={}
+Weapon={}
+STATUS={}
+Area= df[['Area_ID', 'Area_Name']].drop_duplicates().set_index('Area_Name').to_dict()['Area_ID']
+Premise= df[['Premise_Code', 'Premise_Description']].drop_duplicates().set_index('Premise_Description').to_dict()['Premise_Code']
+Weapon= df[['Weapon_Used_Code', 'Weapon_Description']].drop_duplicates().set_index('Weapon_Description').to_dict()['Weapon_Used_Code']
+STATUS= df[['Status', 'Status_Description']].drop_duplicates().set_index('Status_Description').to_dict()['Status']
 
 application = Flask(__name__)
 app = application
@@ -29,26 +49,26 @@ def predict_datapoints():
     else:
         Location = request.form.get('Location')
         Cross_Street = request.form.get('Cross_Street')
-        Latitude = float(request.form.get('Latitude'))  # Default to 0.0 if not present
-        Longitude = float(request.form.get('Longitude'))  # Default to 0.0 if not present
-        Date_Reported = request.form.get('Date_Reported')
+        Latitude = float(request.form.get('Latitude'))  
+        Longitude = float(request.form.get('Longitude'))  
         Date_Occurred = request.form.get('Date_Occurred')
+        Date_Reported = request.form.get('Date_Reported')
         Time_Occurred = request.form.get('Time_Occurred')  # HH:MM format
-        Area_ID = int(request.form.get('Area_ID'))  # Default to 0 if not present
         Area_Name = request.form.get('Area_Name')
-        Reporting_District_no = int(request.form.get('Reporting_District_no'))  # Default to 0 if not present
-        Part_1_2 = int(request.form.get('Part_1_2'))  # Default to 0 if not present
+        Reporting_District_no = int(request.form.get('Reporting_District_no'))  
+        Part_1_2 = int(request.form.get('Part_1_2'))  
         Modus_Operandi = request.form.get('Modus_Operandi')
-        Victim_Age = int(request.form.get('Victim_Age'))  # Default to 0 if not present
+        Victim_Age = int(request.form.get('Victim_Age'))  
         Victim_Sex = request.form.get('Victim_Sex')
         Victim_Descent = request.form.get('Victim_Descent')
-        Premise_Code = int(request.form.get('Premise_Code'))  # Default to 0 if not present
         Premise_Description = request.form.get('Premise_Description')
-        Weapon_Used_Code = float(request.form.get('Weapon_Used_Code'))  # Default to 0.0 if not present
         Weapon_Description = request.form.get('Weapon_Description')
-        Status = request.form.get('Status')
         Status_Description = request.form.get('Status_Description')
 
+        Area_ID =   int(Area[Area_Name])
+        Premise_Code = int(Premise[Premise_Description])
+        Weapon_Used_Code = float(Weapon[Weapon_Description])
+        Status = STATUS[Status_Description]
         # Convert Time Occurred from HH:MM to HHMM
         if Time_Occurred:
             Time_Occurred = Time_Occurred.replace(':', '')  # Remove colon

@@ -49,8 +49,8 @@ class CustomData:
        self.Cross_Street=Cross_Street 
        self.Latitude=Latitude 
        self.Longitude=Longitude
-       self.Date_Reported=Date_Reported
        self.Date_Occurred=Date_Occurred 
+       self.Date_Reported=Date_Reported
        self.Time_Occurred=Time_Occurred 
        self.Area_ID =Area_ID
        self.Area_Name=Area_Name
