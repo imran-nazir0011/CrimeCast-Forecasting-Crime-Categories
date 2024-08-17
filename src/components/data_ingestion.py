@@ -29,7 +29,8 @@ class DataIngestion:
         logging.info('Data Ingestion has initiated')
         try:
             # Load raw data
-            df = pd.read_csv('data/crime_data.csv')
+            path=os.path.join('notebook','data','crime_data.csv')
+            df = pd.read_csv(path)
             logging.info('Raw data has been loaded')
             
             # Save the raw data to the raw_data_path
