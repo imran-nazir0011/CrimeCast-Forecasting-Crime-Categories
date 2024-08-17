@@ -32,8 +32,8 @@ Premise= df[['Premise_Code', 'Premise_Description']].drop_duplicates().set_index
 Weapon= df[['Weapon_Used_Code', 'Weapon_Description']].drop_duplicates().set_index('Weapon_Description').to_dict()['Weapon_Used_Code']
 STATUS= df[['Status', 'Status_Description']].drop_duplicates().set_index('Status_Description').to_dict()['Status']
 
-application = Flask(__name__)
-app = application
+app = Flask(__name__)
+
 
 @app.route('/')
 def home():
