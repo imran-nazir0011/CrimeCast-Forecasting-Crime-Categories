@@ -102,7 +102,7 @@ def predict_datapoints():
         except Exception as e:
             logging.error(f"An error occurred: {e}")
             logging.error(traceback.format_exc())
-            return render_template('predict.html', result="Error occurred", unique_values=unique_values)
+            return render_template('predict.html', result=f"Error occurred : {e}", unique_values=unique_values)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
