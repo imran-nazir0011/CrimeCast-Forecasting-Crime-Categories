@@ -29,7 +29,7 @@ class PredictPipeline:
         cleaned__data=preprocessor.transform(features)
     
         prediction=model.predict(cleaned__data)
-        label_path='artifacts\labels.csv'
+        label_path=os.path.join('artifacts','labels.csv')
         label=pd.read_csv(label_path)
         predicted_label=label.loc[label['Code']==prediction[0],'Crime_Category']
         logging.info(f'The predicted Crime Category  is {predicted_label.iloc[0]}')
