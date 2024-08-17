@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-import logging
-import traceback
+
 from flask import Flask, render_template, request
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.predict_pipeline import PredictPipeline, CustomData
@@ -100,8 +99,6 @@ def predict_datapoints():
             result = obj.predict(f)
             return render_template('predict.html', result=result, unique_values=unique_values)
         except Exception as e:
-            logging.error(f"An error occurred: {e}")
-            logging.error(traceback.format_exc())
             return render_template('predict.html', result=f"Error occurred : {e}", unique_values=unique_values)
 
 if __name__ == '__main__':
