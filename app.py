@@ -6,8 +6,6 @@ from sklearn.preprocessing import StandardScaler
 from src.pipeline.predict_pipeline import PredictPipeline, CustomData
 from src.components.data_ingestion import DataIngestionConfig
 
-# Set up logging
-logging.basicConfig(level=logging.INFO)
 
 # Load data and extract unique values for dropdowns
 df = pd.read_csv(DataIngestionConfig().raw_data_path)
