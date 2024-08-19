@@ -15,7 +15,7 @@ This project involves classifying crime categories using LA Police crime data. T
 
 1. **Clone the Repository**
    ```bash
-   git clone 'https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories'
+   git clone 'https://github.com/imran-nazir0011/CrimeCast-Forecasting-Crime-Categories.git'
    cd 'CrimeCast-Forecasting-Crime-Categories'
    ```
 
