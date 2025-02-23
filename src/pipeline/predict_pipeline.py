@@ -40,7 +40,7 @@ class PredictPipeline:
 class CustomData:
     def __init__(self,Location:str,Cross_Street:str,Latitude:float,Longitude:float,Date_Reported:str,
        Date_Occurred:str, Time_Occurred:int, Area_ID:int, Area_Name:str,
-       Reporting_District_no:int, Part_1_2:int, Modus_Operandi:str, Victim_Age:int,
+       Reporting_District_no:int, Part_1_2:int, Victim_Age:int,
        Victim_Sex:str, Victim_Descent:str, Premise_Code:int, Premise_Description:str,
        Weapon_Used_Code:float, Weapon_Description:str, Status:str,
        Status_Description:str):
@@ -56,7 +56,6 @@ class CustomData:
        self.Area_Name=Area_Name
        self.Reporting_District_no =Reporting_District_no
        self.Part_1_2=Part_1_2
-       self.Modus_Operandi =Modus_Operandi
        self.Victim_Age=Victim_Age
        self.Victim_Sex =Victim_Sex
        self.Victim_Descent =Victim_Descent
@@ -82,7 +81,6 @@ class CustomData:
                 'Area_Name': [self.Area_Name],
                 'Reporting_District_no': [self.Reporting_District_no],
                 'Part 1-2': [self.Part_1_2],  # Use self.Part_1_2 for 'Part 1-2'
-                'Modus_Operandi': [self.Modus_Operandi],
                 'Victim_Age': [self.Victim_Age],
                 'Victim_Sex': [self.Victim_Sex],
                 'Victim_Descent': [self.Victim_Descent],

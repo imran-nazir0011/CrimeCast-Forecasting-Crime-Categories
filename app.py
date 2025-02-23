@@ -49,7 +49,6 @@ def predict_datapoints():
             Area_Name = request.form.get('Area_Name')
             Reporting_District_no = int(request.form.get('Reporting_District_no'))
             Part_1_2 = int(request.form.get('Part_1_2'))
-            Modus_Operandi = request.form.get('Modus_Operandi')
             Victim_Age = int(request.form.get('Victim_Age'))
             Victim_Sex = request.form.get('Victim_Sex')
             Victim_Descent = request.form.get('Victim_Descent')
@@ -81,7 +80,7 @@ def predict_datapoints():
                 Area_Name=Area_Name,
                 Reporting_District_no=Reporting_District_no,
                 Part_1_2=Part_1_2,
-                Modus_Operandi=Modus_Operandi,
+                
                 Victim_Age=Victim_Age,
                 Victim_Sex=Victim_Sex,
                 Victim_Descent=Victim_Descent,

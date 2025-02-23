@@ -30,7 +30,7 @@ class DataTransformation:
     def get_data_transformer_object(self):
         
         try:
-            numerical_columns=['Latitude','Longitude','Area_ID','Reporting_District_no','Part 1-2','Victim_Age','Premise_Code','Weapon_Used_Code','Hours_Occurred','Reported_Year','Reported_Month','Reported_Weekday','Occurred_Day','Occurred_Weekday','Modus_Operandi_num_code','Time_Difference_Log']
+            numerical_columns=['Latitude','Longitude','Area_ID','Reporting_District_no','Part 1-2','Victim_Age','Premise_Code','Weapon_Used_Code','Hours_Occurred','Reported_Year','Reported_Month','Reported_Weekday','Occurred_Day','Occurred_Weekday','Time_Difference_Log']
             
             categorical_columns=['Location', 'Victim_Sex', 'Victim_Descent', 'Status']
 

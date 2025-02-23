@@ -54,9 +54,14 @@ class DataCleaning:
 
             # Function to convert Time_Occurred to hours
             def convert_to_hours(time):
-                hours = time // 100          # Integer division to get the hour
-                minutes = time % 100         # Modulus to get the minutes
-                return hours + minutes / 60   # Return total hours as a decimal
+                if isinstance(time,str):
+                    time = time.split(':')
+                    hours = int(time[0])        
+                    minutes = int(time[1]) 
+                else:
+                    hours = time/100
+                    minutes = time - hours       
+                return hours + (minutes / 60)   # Return total hours as a decimal
 
             # Apply the function to the Time_Occurred column
             df['Hours_Occurred'] = df['Time_Occurred'].apply(convert_to_hours)
@@ -76,8 +81,6 @@ class DataCleaning:
             # Calculate time difference in hours
             df['Time_Difference'] = (df['Date_Reported'] - df['Date_Occurred']).dt.total_seconds() / 3600  # in hours
            
-            # Add feature: Modus_Operandi_num_code
-            df['Modus_Operandi_num_code'] = df['Modus_Operandi'].apply(lambda x: len(str(x).split()))
 
             # Log-transform the Time_Difference
             df['Time_Difference_Log'] = np.log(df['Time_Difference'] + 1)
@@ -98,7 +101,7 @@ class DataCleaning:
                 'Reported_Day', 'Occurred_Year', 'Occurred_Month', 
                 'Date_Reported', 'Date_Occurred', 'Area_Name', 
                 'Premise_Description', 'Weapon_Description', 
-                'Status_Description', 'Time_Difference', 'Modus_Operandi', 
+                'Status_Description', 'Time_Difference', 
                 'Cross_Street', 'Time_Occurred'
             ]
             
