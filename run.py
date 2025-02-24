@@ -32,12 +32,12 @@ victim_descent_options = sorted(df["Victim_Descent"].dropna().unique().tolist())
 street_options =sorted(df['Cross_Street'].dropna().unique().tolist())
 
 # Sidebar Navigation
-st.sidebar.title("LA Police Crime Prediction App")
+st.sidebar.title("LA Police Crime Classification App")
 page = st.sidebar.radio("Navigate", ["Predict Crime"])
 
 if page == "Predict Crime" :
 
-    st.title("Crime Data Prediction 🔍")
+    st.title("Crime Data Classification 🔍")
     st.write("Fill in the details below to predict crime occurrence.")
 
     with st.form("crime_prediction_form"):
